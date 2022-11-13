@@ -1,12 +1,11 @@
 const express = require('express');
 const readTalker = require('../utils/readTalker');
-const { HTTP_OK_STATUS, HTTP_CLIENT_ERROR_STATUS } = require('../index');
 
 const talkerRoute = express.Router();
 
 talkerRoute.get('/', async (_req, res) => {
   const talkers = await readTalker();
-  return res.status(HTTP_OK_STATUS).json(talkers);
+  return res.status(200).json(talkers);
 });
 
 talkerRoute.get('/:id', async (req, res) => {
@@ -16,8 +15,8 @@ talkerRoute.get('/:id', async (req, res) => {
     talker.id === Number(id)
   ));
   return foundTalker ? (
-    res.status(HTTP_OK_STATUS).json(foundTalker)
-  ) : res.status(HTTP_CLIENT_ERROR_STATUS).send({ message: 'Pessoa palestrante não encontrada' });
+    res.status(200).json(foundTalker)
+  ) : res.status(404).send({ message: 'Pessoa palestrante não encontrada' });
 });
 
 module.exports = talkerRoute;
