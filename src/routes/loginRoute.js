@@ -1,12 +1,13 @@
 const express = require('express');
 const generateToken = require('../utils/regenerateToken');
+const validateEmail = require('../middlewares/validateEmail');
+const validatePassword = require('../middlewares/validatePassword');
 
 const loginRoute = express.Router();
 
-loginRoute.post('/', (req, res) => {
-  // const { email, password } = req.body;
-  console.log(200);
+loginRoute.post('/', validateEmail, validatePassword, (req, res) => {
   const token = generateToken();
+
   return res.status(200).json({ token });
 });
 
