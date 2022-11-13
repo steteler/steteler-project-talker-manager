@@ -1,17 +1,23 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const talkerRoute = require('./routes/talkerRoute');
 
 const app = express();
-app.use(bodyParser.json());
+
+app.use(express.json());
+app.use('/talker', talkerRoute);
 
 const HTTP_OK_STATUS = 200;
+const HTTP_CLIENT_ERROR_STATUS = 404;
 const PORT = '3000';
 
 // não remova esse endpoint, e para o avaliador funcionar
-app.get('/', (_request, response) => {
-  response.status(HTTP_OK_STATUS).send();
+app.get('/', (_req, res) => {
+  res.status(HTTP_OK_STATUS).send();
 });
 
-app.listen(PORT, () => {
-  console.log('Online');
-});
+module.exports = {
+  app,
+  PORT,
+  HTTP_OK_STATUS,
+  HTTP_CLIENT_ERROR_STATUS,
+};
