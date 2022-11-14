@@ -1,4 +1,11 @@
 const express = require('express');
+const validateAge = require('../middlewares/validateAge');
+const validateName = require('../middlewares/validateName');
+const validateRate = require('../middlewares/validateRate');
+const validateTalk = require('../middlewares/validateTalk');
+const validateToken = require('../middlewares/validateToken');
+const validateWatchedAt = require('../middlewares/validateWatchedAt');
+const addNewTalker = require('../utils/addNewTalker');
 const readTalker = require('../utils/readTalker');
 
 const talkerRoute = express.Router();
@@ -18,5 +25,18 @@ talkerRoute.get('/:id', async (req, res) => {
     res.status(200).json(foundTalker)
   ) : res.status(404).send({ message: 'Pessoa palestrante não encontrada' });
 });
+
+talkerRoute.post('/',
+  validateToken,
+  validateName,
+  validateAge,
+  validateTalk,
+  validateWatchedAt,
+  validateRate,
+  async (req, res) => {
+    const talker = req.body;
+    const newTalker = await addNewTalker(talker);
+    return res.status(201).json(newTalker);
+  });
 
 module.exports = talkerRoute;

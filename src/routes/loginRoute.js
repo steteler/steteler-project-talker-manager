@@ -1,5 +1,5 @@
 const express = require('express');
-const generateToken = require('../utils/regenerateToken');
+const generateToken = require('../utils/generateToken');
 const validateEmail = require('../middlewares/validateEmail');
 const validatePassword = require('../middlewares/validatePassword');
 
