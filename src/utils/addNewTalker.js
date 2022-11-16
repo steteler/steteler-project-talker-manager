@@ -5,7 +5,6 @@ async function addNewTalker(talker) {
   const talkers = await readTalker();
   const newTalker = { id: talkers[talkers.length - 1].id + 1, ...talker };
   const newTalkers = [...talkers, newTalker];
-  console.log(newTalkers);
   await writeFile('./src/talker.json', JSON.stringify(newTalkers));
   return newTalker;
 }

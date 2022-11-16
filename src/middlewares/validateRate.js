@@ -3,7 +3,7 @@ const checkIsValidRate = require('../utils/checkIsValidRate');
 function validateRate(req, res, next) {
   const { rate } = req.body.talk;
 
-  if (!rate) {
+  if (rate === undefined) {
     return res.status(400).send({ message: 'O campo "rate" é obrigatório' });
   }
 
