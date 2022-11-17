@@ -7,6 +7,7 @@ const validateToken = require('../middlewares/validateToken');
 const validateWatchedAt = require('../middlewares/validateWatchedAt');
 const addNewTalker = require('../utils/addNewTalker');
 const readTalker = require('../utils/readTalker');
+const removeTalker = require('../utils/removeTalker');
 const updateTalker = require('../utils/updateTalker');
 
 const talkerRoute = express.Router();
@@ -53,6 +54,15 @@ talkerRoute.put('/:id',
     const updatedTalker = await updateTalker(Number(id), newTalker);
 
     return res.status(200).json(updatedTalker);
+  });
+
+talkerRoute.delete('/:id',
+  validateToken,
+  async (req, res) => {
+    const { id } = req.params;
+    await removeTalker(Number(id));
+
+    return res.status(204).send();
   });
 
 module.exports = talkerRoute;
