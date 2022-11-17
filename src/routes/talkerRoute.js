@@ -12,6 +12,22 @@ const updateTalker = require('../utils/updateTalker');
 
 const talkerRoute = express.Router();
 
+talkerRoute.get('/search', validateToken, async (req, res) => {
+  const { q } = req.query;
+
+  const talkers = await readTalker();
+
+  if (!q) {
+    return res.status(200).json(talkers);
+  }
+
+  const filteredTalkers = talkers.filter(({ name }) => (
+    name.includes(q)
+  ));
+
+  return res.status(200).json(filteredTalkers);
+});
+
 talkerRoute.get('/', async (_req, res) => {
   const talkers = await readTalker();
   return res.status(200).json(talkers);
